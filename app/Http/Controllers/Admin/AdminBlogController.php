@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Models\Blog;
+//use Illuminate\Support\Facades\Log;
 
 class AdminBlogController extends Controller
 {
@@ -14,7 +15,8 @@ class AdminBlogController extends Controller
      */
     public function index()
     {
-        return view('admin.blogs.index');
+        $blogs = Blog::all();
+        return view('admin.blogs.index',['blogs' => $blogs]);
     }
 
     /**
@@ -36,6 +38,7 @@ class AdminBlogController extends Controller
         // Blog::create($validated);
     
         $savedImagePath = $request->file('image')->store('blogs','public');
+        //Log::debug($savedImagePath);
         $blog = new Blog($request->validated());
         $blog->image = $savedImagePath;
         $blog->save();
@@ -52,12 +55,11 @@ class AdminBlogController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    //指定したIDのブログの編集画面
     public function edit(string $id)
     {
-        //
+        $blog = Blog::find(id);
+        return view('admin.blogs/edit',['blog' => $blog]);
     }
 
     /**
