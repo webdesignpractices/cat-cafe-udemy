@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Models\Blog;
-//use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Admin\UpdateBlogRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class AdminBlogController extends Controller
 {
@@ -62,12 +64,20 @@ class AdminBlogController extends Controller
         return view('admin.blogs/edit',['blog' => $blog]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    //ブログの更新処理
+    public function update(UpdateBlogRequest $request, string $id)
     {
-        //
+        $blog = Blog::findOrFail($id);
+        $updateData = $request->validated();
+        if($request->has('image')){
+            //変更前の画像を削除
+            Storage::disk('public')->delete($blog->image);
+            //変更後の画像をアップロード、保存パスを変更対象データにセット
+            $updateData['image'] = $request->file('image')->store('blogs','public');
+            //Log::debug($updateData);
+        }
+        $blog->update($updateData);
+        return to_route('admin.blogs.index')->with(['success' => 'ブログを更新しました']);
     }
 
     /**
