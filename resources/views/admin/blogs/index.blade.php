@@ -55,7 +55,7 @@
         </div>
     </div>
 
-        <!-- ▼▼▼▼ページャー▼▼▼▼　-->
+        <!-- ▼▼▼▼ページャー▼▼▼▼　
         <div class="flex items-center justify-end">
                 <a class="inline-flex mr-3 items-center justify-center w-8 h-8 text-xs text-gray-500 border border-gray-300 bg-white hover:bg-indigo-50 rounded" href="#">
                     <svg width="6" height="8" viewbox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,6 +81,8 @@
                     </svg>
                 </a>
             </div>
-        <!-- ▲▲▲▲ページャー▲▲▲▲　-->
+            ▲▲▲▲ページャー▲▲▲▲　-->
+            {{ $blogs->onEachSide(2)->links()}}
+         
 </section>
 @endsection
