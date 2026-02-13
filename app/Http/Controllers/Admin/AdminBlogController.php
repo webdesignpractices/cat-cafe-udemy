@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Cat;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -62,9 +63,10 @@ class AdminBlogController extends Controller
     //指定したIDのブログの編集画面
     public function edit(Blog $blog)
     {
+        $cats = Cat::all();
         $categories = Category::all();
         //$blog = Blog::findOrFail($id);
-        return view('admin.blogs/edit',['blog' => $blog,'categories' => $categories]);
+        return view('admin.blogs/edit',['blog' => $blog,'categories' => $categories,'cats' => $cats]);
     }
 
     //ブログの更新処理
@@ -81,6 +83,7 @@ class AdminBlogController extends Controller
         }
         $blog->category()->associate($updateData['category_id']);
         $blog->update($updateData);
+        $blog->cats()->attach($updateData['cats']);
         return to_route('admin.blogs.index')->with(['success' => 'ブログを更新しました']);
     }
 
