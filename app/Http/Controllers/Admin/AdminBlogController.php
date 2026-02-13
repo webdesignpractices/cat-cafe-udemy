@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -61,8 +62,9 @@ class AdminBlogController extends Controller
     //指定したIDのブログの編集画面
     public function edit(Blog $blog)
     {
+        $categories = Category::all();
         //$blog = Blog::findOrFail($id);
-        return view('admin.blogs/edit',['blog' => $blog]);
+        return view('admin.blogs/edit',['blog' => $blog,'categories' => $categories]);
     }
 
     //ブログの更新処理
