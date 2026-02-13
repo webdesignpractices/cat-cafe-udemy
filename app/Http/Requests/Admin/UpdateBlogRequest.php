@@ -23,6 +23,7 @@ class UpdateBlogRequest extends FormRequest
     {
         return [
             //ブログ作成時のルールと同じにしたいが、写真を変更しなかった場合に同じ写真をアップロードする必要がでてきて扱いづらい
+        'category_id' => ['required','exists:categories,id'],
         'title' => ['required', 'max:255'],
         'image' => [
             'nullable',//同じ写真を使いたい場合に選びなおす必要がない

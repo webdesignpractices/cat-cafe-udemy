@@ -79,6 +79,7 @@ class AdminBlogController extends Controller
             $updateData['image'] = $request->file('image')->store('blogs','public');
             //Log::debug($updateData);
         }
+        $blog->category()->associate($updateData['category_id']);
         $blog->update($updateData);
         return to_route('admin.blogs.index')->with(['success' => 'ブログを更新しました']);
     }
