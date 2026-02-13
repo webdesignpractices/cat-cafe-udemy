@@ -13,6 +13,6 @@ class Blog extends Model
         return $this->belongsTo(Category::class);
     }
     public function cats(){
-        return $this->belongsToMany(Cat::class);
+        return $this->belongsToMany(Cat::class)->withTimestamps();
     }
 }

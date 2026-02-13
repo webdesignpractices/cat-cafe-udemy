@@ -83,7 +83,7 @@ class AdminBlogController extends Controller
         }
         $blog->category()->associate($updateData['category_id']);
         $blog->update($updateData);
-        $blog->cats()->attach($updateData['cats']);
+        $blog->cats()->sync($updateData['cats'] ?? []);
         return to_route('admin.blogs.index')->with(['success' => 'ブログを更新しました']);
     }
 
