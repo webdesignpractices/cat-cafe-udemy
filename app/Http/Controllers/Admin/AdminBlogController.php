@@ -20,7 +20,7 @@ class AdminBlogController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        //$user = Auth::user();
         //$blogs = Blog::latest('updated_at')->paginate(10);
         $blogs = Blog::latest('updated_at')->simplePaginate(10);
         return view('admin.blogs.index',['blogs' => $blogs]);

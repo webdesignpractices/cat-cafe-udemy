@@ -40,4 +40,14 @@ public function login(Request $request)
         'email' => 'メールアドレスまたはパスワードが正しくありません',
     ])->onlyInput('email');
 }
+
+    public function logout(Request $request){
+        Auth::logout();
+        // ログアウト処理
+        $request->session()->invalidate();
+        // 現在使っているセッションを無効化(セキュリティ対策のため)
+        $request->session()->regenerateToken();
+        // セッションを無効化を再生成(セキュリティ対策のため)
+        return redirect()->route('admin.login');
+    }
 }
