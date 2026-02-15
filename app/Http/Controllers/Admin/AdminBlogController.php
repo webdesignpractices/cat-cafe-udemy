@@ -11,6 +11,7 @@ use App\Models\Cat;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AdminBlogController extends Controller
 {
@@ -19,6 +20,7 @@ class AdminBlogController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         //$blogs = Blog::latest('updated_at')->paginate(10);
         $blogs = Blog::latest('updated_at')->simplePaginate(10);
         return view('admin.blogs.index',['blogs' => $blogs]);
