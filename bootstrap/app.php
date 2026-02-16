@@ -14,7 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //パスで指定
         //$middleware->redirectGuestsTo('/admin/login');
         //ルート名で指定
-        $middleware->redirectGuestsTo(fn() => route('admin.login'));
+        $middleware->redirectGuestsTo(fn() => route('admin.login'))
+                    ->redirectUsersTo(fn() => route('admin.blogs.index'));//メソッドチェーンも可能
+        //$middleware->redirectUsersTo(fn() => route('admin.blogs.index'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
